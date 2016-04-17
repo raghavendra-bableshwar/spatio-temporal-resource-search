@@ -116,21 +116,24 @@ public class Baseline implements Algorithms {
 				e.printStackTrace();
 			}
 			System.out.println(newTime);
-			SortedMap<Date, Integer> availableSlotsBetweenTimestamps = timeStampAndAvailSlotsMap.subMap(timestamp,
-					newTime);
+			SortedMap<Date, Integer> availableSlotsBetweenTimestamps = timeStampAndAvailSlotsMap.subMap(timestamp, true,
+					newTime, false);
+			if (availableSlotsBetweenTimestamps.isEmpty()) {
+				availableSlotsBetweenTimestamps = findParkingActivites(timestamp, newTime, timeStampAndAvailSlotsMap);
+			}
 			Integer numTimeSlots = availableSlotsBetweenTimestamps.size();
 			Integer nParkingSlotAvailability = 0;
 
 			for (Map.Entry<Date, Integer> entry : availableSlotsBetweenTimestamps.entrySet()) {
 				if (entry.getValue() > 0) {
-					//System.out.println("Got parking slot");
+					// System.out.println("Got parking slot");
 					nParkingSlotAvailability++;
 					// return;
 				}
 			}
-			if (nParkingSlotAvailability >= (int)Math.ceil(numTimeSlots / 2.0) && nParkingSlotAvailability != 0) {
+			if (nParkingSlotAvailability == numTimeSlots) {
 				System.out.println("Got parking slot");
-				//System.out.println((int)Math.ceil(numTimeSlots / 2.0));
+				// System.out.println((int)Math.ceil(numTimeSlots / 2.0));
 				return;
 			}
 			timestamp = newTime;
@@ -168,20 +171,25 @@ public class Baseline implements Algorithms {
 					}
 					System.out.println(newTime);
 					SortedMap<Date, Integer> availableSlotsBetweenTimestamps = timeStampAndAvailSlotsMap
-							.subMap(timestamp, newTime);
+							.subMap(timestamp, true, newTime, false);
+					if (availableSlotsBetweenTimestamps.isEmpty()) {
+						availableSlotsBetweenTimestamps = findParkingActivites(timestamp, newTime,
+								timeStampAndAvailSlotsMap);
+					}
 					Integer numTimeSlots = availableSlotsBetweenTimestamps.size();
 					Integer nParkingSlotAvailability = 0;
 
 					for (Map.Entry<Date, Integer> entry : availableSlotsBetweenTimestamps.entrySet()) {
 						if (entry.getValue() > 0) {
-							//System.out.println("Got parking slot");
+							// System.out.println("Got parking slot");
 							nParkingSlotAvailability++;
 							// return;
 						}
 					}
-					if (nParkingSlotAvailability >= (int)Math.ceil(numTimeSlots / 2.0) && nParkingSlotAvailability != 0) {
+					if (nParkingSlotAvailability == numTimeSlots) {
 						System.out.println("Got parking slot");
-						//System.out.println((int)Math.ceil(numTimeSlots / 2.0));
+						// System.out.println((int)Math.ceil(numTimeSlots /
+						// 2.0));
 						return;
 					}
 					timestamp = newTime;
@@ -196,10 +204,41 @@ public class Baseline implements Algorithms {
 		}
 	}
 
+	private SortedMap<Date, Integer> findParkingActivites(Date d1, Date d2,
+			TreeMap<Date, Integer> timeStampAndAvailSlotsMap) {
+		Date[] orderedDate = timeStampAndAvailSlotsMap.keySet()
+				.toArray(new Date[timeStampAndAvailSlotsMap.keySet().size()]);
+		int idx1 = binSearch(orderedDate, 0, orderedDate.length, d1, true);
+		int idx2 = binSearch(orderedDate, 0, orderedDate.length, d2, false);
+		d1 = orderedDate[idx1];
+		d2 = orderedDate[idx2];
+		return timeStampAndAvailSlotsMap.subMap(d1, true, d2, false);
+	}
+
+	private int binSearch(Date[] orderedDate, int s, int e, Date searchTerm, boolean isFirstTimeCall) {
+		int mid = (s + e) / 2;
+		if (s <= e) {
+			if (searchTerm.equals(orderedDate[mid])) {
+				return mid;
+			} else if (searchTerm.after(orderedDate[mid]) && searchTerm.before(orderedDate[mid + 1])) {
+				if (isFirstTimeCall)
+					return mid;
+				else
+					return mid + 1;
+			} else if (searchTerm.after(orderedDate[mid])) {
+				return binSearch(orderedDate, mid + 1, e, searchTerm, isFirstTimeCall);
+			} else {
+				return binSearch(orderedDate, s, mid - 1, searchTerm, isFirstTimeCall);
+			}
+		} else {
+			return -1;
+		}
+	}
+
 	@Override
-	public List<Node> fetchRoute(Block b,String hour, String min, String sec) {
-		return null;
+	public List<Node> fetchRoute(Block b, String hour, String min, String sec) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }
+
