@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>SpatioTemporalResourceSearch</display-name>
+  
+  <servlet>
+		<servlet-name>SpatioTemporalResourceSearch</servlet-name>
+		<servlet-class>com.src.spatiotemporal.servlet.ConfigurationServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- <servlet-mapping>
+		<servlet-name>SpatioTemporalResourceSearch</servlet-name>
+		<url-pattern>/SpatioTemporalResourceSearch</url-pattern>
+	</servlet-mapping> -->
+	
+	
+  <welcome-file-list>
+<!--   	<welcome-file>SpatioTemporalResourceSearch</welcome-file> -->    
+<welcome-file>input.html</welcome-file>
+  </welcome-file-list>
+  
+   <servlet>
+    <description></description>
+    <display-name>Input</display-name>
+    <servlet-name>Input</servlet-name>
+    <servlet-class>com.src.spatiotemporal.servlet.Input</servlet-class>
+  </servlet>
+  <servlet-mapping>
+		<servlet-name>Input</servlet-name>
+		<url-pattern>/Input</url-pattern>
+	</servlet-mapping> 
+	
+	 <servlet>
+    <description></description>
+    <display-name>AlgorithmSelection</display-name>
+    <servlet-name>AlgorithmSelection</servlet-name>
+    <servlet-class>com.src.spatiotemporal.servlet.AlgorithmSelection</servlet-class>
+  </servlet>
+  <servlet-mapping>
+		<servlet-name>AlgorithmSelection</servlet-name>
+		<url-pattern>/AlgorithmSelection</url-pattern>
+	</servlet-mapping> 
+	
+  </web-app>

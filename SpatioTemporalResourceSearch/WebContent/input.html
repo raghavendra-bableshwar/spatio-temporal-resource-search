@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Find a parking slot</title>
+<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCLkKEjvt2AAgFWfoVz1-ZruhlFjNprgyw"></script>
+
+<script type="text/javascript">
+$(document).ready(function ($)
+		{
+	$.get('Input?fun=originList', function(responseText) { 
+        $('#originList').html(responseText);
+    });
+	$.get('Input?fun=hourList', function(responseText) { 
+        $('#hourList').html(responseText);
+    });
+	$.get('Input?fun=minList', function(responseText) { 
+        $('#minList').html(responseText);
+    });
+	$.get('Input?fun=secList', function(responseText) { 
+        $('#secList').html(responseText);
+    });
+		});
+		
+function runAlgorithm()
+{
+	var url = 'AlgorithmSelection?origin='+$("#originList").val()+'&algo='+$("#algoList").val()+'&hour='+$("#hourList").val()+'&min='+$("#minList").val()+'&sec='+$("#secList").val();
+	alert(url);
+	$.get(url, function(responseText) { 
+		obj = JSON.parse(responseText);
+		display(obj)
+    });
+}
+		
+function display(obj)
+{
+	var myTrip = new Array();
+	for(var i=0;i<obj.length;i++)
+		{
+		var x=new google.maps.LatLng(obj[i].nodeLatitude,obj[i].nodeLongitude);
+		myTrip[i] = x;
+		}
+var centerOfMap = myTrip[Math.floor(myTrip.length/2)];
+var mapProp = {
+		  center:centerOfMap,
+		  zoom:17,
+		  mapTypeId:google.maps.MapTypeId.ROADMAP
+		  };
+		  
+var map=new google.maps.Map(document.getElementById("routeDisplay"),mapProp);
+
+var flightPath=new google.maps.Polyline({
+	  path:myTrip,
+	  strokeColor:"#FF0000",
+	  strokeOpacity:1.0,
+	  strokeWeight:5
+	  });
+flightPath.setMap(map);
+for(x=0;x<obj.length;x++)
+	{
+var marker = new google.maps.Marker({
+	position:myTrip[x]
+});
+marker.setMap(map);
+	}
+}
+</script>
+<style type="text/css">
+body,table{
+font-size: 15pt;
+font-family: sans-serif;
+}
+table {
+    border: 5px solid navy;
+    border-spacing: 25px;
+    background-color: rgb(203,245,244);
+    
+}
+ td {
+    border: 0px;
+    font-weight: bold;
+    
+}
+</style>
+</head>
+<body>
+<div align="center" style="width: 100%; " >
+<table>
+<tr>
+<td>
+<span style="font-weight: bold; font-size: 20pt; font-family: sans-serif;">Spatio Temporal Resource Search</span>
+</td>
+</tr>
+</table>
+</div>
+<form name="inputFrm" >     <!-- method="post" action="Input?fun=submit" -->
+<div align="center" style="width: 100%; margin-top: 1%" >
+<table >
+<tr>
+<td><span id="originCaption">Select a origin location</span></td>
+<td><span id="originSelection">
+<select name="origin" id="originList" >
+</select>
+</span></td>
+</tr>
+
+<tr>
+<td><span id="timeStampCaption">Enter TimeStamp:</span></td>
+</tr>
+
+<tr>
+<td><span id="timeStampHourCaption">HH</span>
+<span id="timeStampHour">
+<select name="hour" id="hourList" >
+</select>
+</span>
+</td>
+
+<td><span id="timeStampMinCaption">MM</span>
+<span id="timeStampMin">
+<select name="min" id="minList" >
+</select>
+</span></td>
+
+<td><span id="timeStampSecCaption">SS</span>
+<span id="timeStampSec">
+<select name="sec" id="secList" >
+</select>
+</span></td>
+</tr>
+
+<tr>
+<td><span id="algoSelectionCaption">Select an algorithm:</span>
+<td>
+<span id="algoSelection">
+<select name="algo" id="algoList" >
+<option value="B">BaseLine</option>
+<option value="D">Deterministic</option>
+<option value="P">Probabilistic</option>
+</select></span></td>
+</tr>
+
+<tr >
+<td colspan="3" align="center">
+<span id="okButton" >
+<input type="button" id="btnOK" onclick="runAlgorithm();" value="Submit" style="width: 90px; height: 30px; font-weight: bolder;">
+</span></td>
+</tr>
+</table>
+</div>
+</form>
+<br/>
+<div id="routeDisplay"  style="width:95%;height:450px;display: block; margin-left: 1%;"></div>
+
+</body>
+</html>
