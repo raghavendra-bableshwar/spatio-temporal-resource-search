@@ -5,8 +5,12 @@
 package com.src.spatiotemporal.Entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Stack;
 import java.util.TreeMap;
 
 /**
@@ -16,9 +20,40 @@ import java.util.TreeMap;
 public class Graph {
 	private Hashtable<Long, ArrayList<Block>> adjList;
 	private Hashtable<Long, Boolean> isVisited;
-	// private LinkedHashMap<Double, Block> customBlockDetails;
-	private TreeMap<Double, Block> customBlockDetails;
+	private TreeMap<Long, Block> customBlockDetails;
+	private TreeMap<Long, Node> customNodeDetails;
 	private TreeMap<Long, TreeMap<Date, Integer>> customProjectionDetails;
+	
+	/**
+	 * @return the customNodeDetails
+	 */
+	public TreeMap<Long, Node> getCustomNodeDetails() {
+		return customNodeDetails;
+	}
+
+	/**
+	 * @param customNodeDetails the customNodeDetails to set
+	 */
+	public void setCustomNodeDetails(TreeMap<Long, Node> customNodeDetails) {
+		this.customNodeDetails = customNodeDetails;
+	}
+	
+	public void addCustomNodeDetails(Node node){
+		this.customNodeDetails.put((long) node.getNodeId(), node);
+	}
+	
+	public List<Node> getNodeFromNodeId(Stack<Long> nodeIds){
+		ArrayList<Node> nodeList = new ArrayList<Node>();
+		while(!nodeIds.empty()){
+			Long nodeId = nodeIds.pop();
+			if(this.customNodeDetails.containsKey(nodeId)){
+				nodeList.add(this.customNodeDetails.get(nodeId));
+			}
+		}
+		Collections.reverse(nodeList);
+		return nodeList;
+	}
+
 
 	/**
 	 * @return the customProjectionDetails
@@ -52,7 +87,7 @@ public class Graph {
 	/**
 	 * @return the customBlockDetails
 	 */
-	public TreeMap<Double, Block> getCustomBlockDetails() {
+	public TreeMap<Long, Block> getCustomBlockDetails() {
 		return customBlockDetails;
 	}
 
@@ -60,7 +95,7 @@ public class Graph {
 	 * @param customBlockDetails
 	 *            the customBlockDetails to set
 	 */
-	public void setCustomBlockDetails(TreeMap<Double, Block> customBlockDetails) {
+	public void setCustomBlockDetails(TreeMap<Long, Block> customBlockDetails) {
 		this.customBlockDetails = customBlockDetails;
 	}
 
@@ -68,8 +103,8 @@ public class Graph {
 	 * @param starting
 	 *            longitude of the block and its details
 	 */
-	public void addCustomBlockDetailsEntry(Double longitude, Block b) {
-		customBlockDetails.put(longitude, b);
+	public void addCustomBlockDetailsEntry(Long blockId, Block b) {
+		customBlockDetails.put(blockId, b);
 	}
 
 	public Hashtable<Long, Boolean> getIsVisited() {
@@ -97,8 +132,9 @@ public class Graph {
 	public Graph() {
 		this.adjList = new Hashtable<Long, ArrayList<Block>>();
 		this.isVisited = new Hashtable<Long, Boolean>();
-		this.customBlockDetails = new TreeMap<Double, Block>();
+		this.customBlockDetails = new TreeMap<Long, Block>();
 		this.customProjectionDetails = new TreeMap<Long, TreeMap<Date, Integer>>();
+		this.customNodeDetails = new TreeMap<Long, Node>();
 	}
 
 	/**
@@ -162,6 +198,13 @@ public class Graph {
 				return binSearch(orderedLongitudesArray, mid + 1, e, searchTerm);
 		} else
 			return -1;
+	}
+
+	public Block getBlockDetails(Long blockId) {
+		if(customBlockDetails.containsKey(blockId)){
+			return customBlockDetails.get(blockId);
+		}
+		return null;
 	}
 
 }

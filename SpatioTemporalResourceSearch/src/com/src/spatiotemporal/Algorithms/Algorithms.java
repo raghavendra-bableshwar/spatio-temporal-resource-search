@@ -3,6 +3,7 @@
  */
 package com.src.spatiotemporal.Algorithms;
 
+import java.util.Date;
 import java.util.List;
 
 import com.src.spatiotemporal.Entity.Block;
@@ -23,8 +24,6 @@ public interface Algorithms {
 	//This function is the starting point of all the algorithms
 	//fetch route may inturn call many other methods specific
 	//to that algorithm
-	public void fetchRoute(Double latitude, Double longitude);
-
-	public List<Node> fetchRoute(Block b,String hour, String min, String sec);
+	public List<Node> fetchRoute(long blockId,Date d);
 	
 }

@@ -1,9 +1,15 @@
 package com.src.spatiotemporal.Algorithms;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import com.src.spatiotemporal.Entity.Block;
 import com.src.spatiotemporal.Entity.Node;
+import com.src.spatiotemporal.Main.SpatioTemporal;
 
 public class Deterministic implements Algorithms{
 
@@ -19,7 +25,35 @@ public class Deterministic implements Algorithms{
 			b = position of block*/
 
 	@Override
-	public List<Node> fetchRoute(Block b,String hour, String min, String sec) {
+	public List<Node> fetchRoute(long blockId,Date d) {
+		
+		//4/6/2012  12:03:12 AM
+		//SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("y-M-d H:m:s.S");
+			try {
+				d = format.parse("2012-04-06 0:03:12.0");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		//Current block details			
+		Block b = SpatioTemporal.blockDetails.get(blockId);
+		
+		//Get adjacent nodes for the block
+		TreeMap<Long,Integer> adjNodeDist1 = SpatioTemporal.nodeDistMap.get(b.getnodeId1());
+		TreeMap<Long,Integer> adjNodeDist2 = SpatioTemporal.nodeDistMap.get(b.getnodeId2());
+		
+		
+		ArrayList<Long> blockList = SpatioTemporal.dateAndBlockDetails.get(d);
+		TreeMap<Long, TreeMap<Date, Integer>>  projDetails = SpatioTemporal.g.getCustomProjectionDetails();		
+		
+		for(Long block:blockList)
+		{
+			TreeMap<Date, Integer> blockDetails = projDetails.get(block);
+			int numOfSlots = blockDetails.get(d);		
+			
+			System.out.println(block + "\t:"+ numOfSlots + "\t:" );
+		}
+		
 		return null;
 		
 		
@@ -40,11 +74,4 @@ public class Deterministic implements Algorithms{
 	{
 		
 	}
-
-	@Override
-	public void fetchRoute(Double latitude, Double longitude) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
