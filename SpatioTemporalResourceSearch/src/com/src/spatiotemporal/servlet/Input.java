@@ -67,9 +67,34 @@ public class Input<hour> extends HttpServlet
 			PrintWriter out = response.getWriter();
 			out.println(result.toString());
 		}
-		else if(function.equals("submit"))
+		else if(function.equals("dateList"))
 		{
+			StringBuilder result = new StringBuilder();
+			for(int index = 1; index < 31; index++)
+			{
+				result.append("<option value='"+index+"'>"+index+"</option>");
+			}
+			PrintWriter out = response.getWriter();
+			out.println(result.toString());
+		}
+		else if(function.equals("monthList"))
+		{
+			StringBuilder result = new StringBuilder();
 			
+			result.append("<option value='4'>April</option>");
+			result.append("<option value='5'>May</option>");
+			
+			PrintWriter out = response.getWriter();
+			out.println(result.toString());
+		}
+		else if(function.equals("yearList"))
+		{
+			StringBuilder result = new StringBuilder();
+			
+			result.append("<option value='2012'>2012</option>");
+			
+			PrintWriter out = response.getWriter();
+			out.println(result.toString());
 		}
 	}
 }
