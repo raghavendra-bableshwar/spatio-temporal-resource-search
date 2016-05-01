@@ -21,11 +21,22 @@ $(document).ready(function ($)
 	$.get('Input?fun=secList', function(responseText) { 
         $('#secList').html(responseText);
     });
+	$.get('Input?fun=dateList', function(responseText) { 
+        $('#dateList').html(responseText);
+    });
+	$.get('Input?fun=monthList', function(responseText) { 
+        $('#monList').html(responseText);
+    });
+	$.get('Input?fun=yearList', function(responseText) { 
+        $('#yearList').html(responseText);
+    });
 		});
 		
 function runAlgorithm()
 {
-	var url = 'AlgorithmSelection?origin='+$("#originList").val()+'&algo='+$("#algoList").val()+'&hour='+$("#hourList").val()+'&min='+$("#minList").val()+'&sec='+$("#secList").val();
+	$("routeDisplay").empty();
+	var url = 'AlgorithmSelection?origin='+$("#originList").val()+'&algo='+$("#algoList").val()+'&hour='+$("#hourList").val()+'&min='+$("#minList").val()+'&sec='+$("#secList").val()
+	+'&date='+$("#dateList").val()+'&mon='+$("#monList").val()+'&year='+$("#yearList").val();
 	alert(url);
 	$.get(url, function(responseText) { 
 		obj = JSON.parse(responseText);
@@ -131,12 +142,37 @@ table {
 </tr>
 
 <tr>
+<td><span id="timeStampCaption">Enter Date:</span></td>
+</tr>
+
+<tr>
+<td><span id="dateCaption">Date</span>
+<span id="date">
+<select name="dd" id="dateList" >
+</select>
+</span>
+</td>
+
+<td><span id="monthCaption">Month</span>
+<span id="month">
+<select name="mm" id="monList" >
+</select>
+</span></td>
+
+<td><span id="yearCaption">Year</span>
+<span id="year">
+<select name="yy" id="yearList" >
+</select>
+</span></td>
+</tr>
+
+<tr>
 <td><span id="algoSelectionCaption">Select an algorithm:</span>
 <td>
 <span id="algoSelection">
 <select name="algo" id="algoList" >
 <option value="B">BaseLine</option>
-<option value="D">Deterministic</option>
+<option value="D" selected>Deterministic</option>
 <option value="P">Probabilistic</option>
 </select></span></td>
 </tr>
