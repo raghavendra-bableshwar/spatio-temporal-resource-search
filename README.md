@@ -1,4 +1,3 @@
-
 This is a repository created for CS581 - TEAM 7 (SpatioTemporalResourceSearch) project
 
 ###Team members:###
@@ -10,10 +9,13 @@ Raghavendra Bableshwar - 664260979
 
 ### How do I get set up? ###
 
-* Download the project as zip file
-* Create a dynamic web project in eclipse
-* Import the zip project into the workspace
-* Add jar dependencies for servlet-api.jar and gson.jar (both the jars are there in lib folder)
+* Download the project as zip file (from Download link in left side)
+* Extract the downloaded zip
+* Open a new workspace in eclipse and right click in project explorer and click 'Import'
+* Under 'General', 'Import Exisiting Projects into workspace'
+* Click next and then select 'Root directory' and click on browse
+* Browse to the newly extracted file till the root folder 'SpatioTemporalResourceSearch' and then click on 'Ok' and 'Finish'
+* The new project gets imported to the workspace
 * Create a new Tomcat server and add the project to it
 * Clean the server
 * Clean and Build the project
