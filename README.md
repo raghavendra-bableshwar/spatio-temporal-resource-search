@@ -2,10 +2,9 @@ This is a repository created for CS581 - TEAM 7 (SpatioTemporalResourceSearch) p
 
 ###Team members:###
 
-Swapnil Akolkar - 665395774
-Vishalaxi Tandel - 659468038 
-Raghavendra Bableshwar - * [664260979](https://raghavendrabableshwar.wordpress.com/)
-
+Raghavendra Bableshwar - [664260979](https://raghavendrabableshwar.wordpress.com/)
+Swapnil Akolkar - [665395774](https://www.linkedin.com/in/sakolk/)
+Vishalaxi Tandel - [659468038](https://www.linkedin.com/in/vishalaxivtandel/) 
 
 ### How do I get set up? ###
 
