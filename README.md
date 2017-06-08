@@ -4,8 +4,8 @@ This is a repository created for CS581 - TEAM 7 (SpatioTemporalResourceSearch) p
 
 Swapnil Akolkar - 665395774
 Vishalaxi Tandel - 659468038 
-Raghavendra Bableshwar - 664260979
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Raghavendra Bableshwar - * [664260979](https://raghavendrabableshwar.wordpress.com/)
+
 
 ### How do I get set up? ###
 
