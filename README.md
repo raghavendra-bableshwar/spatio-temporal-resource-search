@@ -6,6 +6,10 @@ Raghavendra Bableshwar - [664260979](https://raghavendrabableshwar.wordpress.com
 Swapnil Akolkar - [665395774](https://www.linkedin.com/in/sakolk/)
 Vishalaxi Tandel - [659468038](https://www.linkedin.com/in/vishalaxivtandel/) 
 
+### What is this project for? ###
+
+Have a look at the [website](https://raghavendrabableshwarblog.wordpress.com/2017/02/26/spatio-temporal-resource-search/) for explanation.
+
 ### How do I get set up? ###
 
 * Download the project as zip file (from Download link in left side)
